@@ -11,7 +11,9 @@ author: Bill Smith
 ---
 
 {: .box-success}
-## Understanding Numeric Encoding in ASCII and UTF-8  
+## Understanding Numeric Encoding in ASCII and UTF-8
+
+![Example](/assets/img/profile_pic.jpeg)
 
 Character encoding is foundational to digital communication, enabling computers to represent human-readable text. For numeric data, **ASCII** and **UTF-8** offer distinct approaches to encoding digits like `0-9`. Below, we break down how these standards handle numeric characters and their practical implications.  
 

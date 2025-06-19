@@ -15,6 +15,8 @@ author: Bill Smith
 
 ![Example](/assets/img/profile_pic.jpeg)
 
+If you find an something that looks like want you can always go [here](https://www.duplichecker.com/ascii-to-text.php)
+
 Character encoding is foundational to digital communication, enabling computers to represent human-readable text. For numeric data, **ASCII** and **UTF-8** offer distinct approaches to encoding digits like `0-9`. Below, we break down how these standards handle numeric characters and their practical implications.  
 
 ### ASCII: The Numeric Blueprint  

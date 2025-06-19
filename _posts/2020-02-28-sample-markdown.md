@@ -11,90 +11,56 @@ author: Bill Smith
 ---
 
 {: .box-success}
-This is a demo post to show you how to write blog posts with markdown.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](https://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/tables/etc.<br/>I also encourage you to look at the [code that created this post](https://raw.githubusercontent.com/daattali/beautiful-jekyll/master/_posts/2020-02-28-sample-markdown.md) to learn some more advanced tips about using markdown in Beautiful Jekyll.
+## Understanding Numeric Encoding in ASCII and UTF-8  
 
-**Here is some bold text**
+Character encoding is foundational to digital communication, enabling computers to represent human-readable text. For numeric data, **ASCII** and **UTF-8** offer distinct approaches to encoding digits like `0-9`. Below, we break down how these standards handle numeric characters and their practical implications.  
 
-## Here is a secondary heading
+### ASCII: The Numeric Blueprint  
+ASCII (American Standard Code for Information Interchange) uses **7-bit codes** (0–127) to represent characters. For digits:  
+- Each digit `0` to `9` maps to a fixed decimal value:  
+  | Digit | ASCII Decimal | Binary       |  
+  |-------|---------------|--------------|  
+  | 0     | 48            | `0011 0000` |  
+  | 1     | 49            | `0011 0001` |  
+  | ...   | ...           | ...          |  
+  | 9     | 57            | `0011 1001` |  
+- **Key Insight**: The binary representation always starts with `0011` (hex `0x30`–`0x39`), followed by the digit’s 4-bit value.  
+- **Limitation**: ASCII only supports basic Latin digits, lacking global numeric symbols (e.g., Arabic or Indic numerals).  
 
-[This is a link to a different site](https://deanattali.com/) and [this is a link to a section inside this page](#local-urls).
+### UTF-8: Backward Compatibility and Beyond  
+UTF-8 extends ASCII’s principles to support Unicode’s vast character set while maintaining backward compatibility:  
+- **Digits `0-9`**: Identical to ASCII (single byte: `0x30`–`0x39`).  
+- **Global Numerals**: Supports non-Latin digits (e.g., ١ Arabic "1") using multi-byte sequences:  
+  - Example: Arabic "1" (U+0661) encodes as `D9 A1` in UTF-8.  
+- **Efficiency**: Like ASCII, Latin digits use 1 byte, but other numerals require 2–3 bytes[.  
 
-Here's a table:
+### Why Numeric Encoding Matters  
+1. **Data Parsing**:  
+   - Systems reading ASCII-encoded digits can seamlessly process UTF-8 digits without modification.  
+   - Example: The string "123" encodes identically (`31 32 33` in hex) in both standards.  
 
-| Number | Next number | Previous number |
-| :------ |:--- | :--- |
-| Five | Six | Four |
-| Ten | Eleven | Nine |
-| Seven | Eight | Six |
-| Two | Three | One |
+2. **Internationalization**:  
+   - UTF-8 enables applications to handle localized numerals (e.g., "١٢٣" for 123 in Arabic).  
 
-You can use [MathJax](https://www.mathjax.org/) to write LaTeX expressions. For example:
-When \\(a \ne 0\\), there are two solutions to \\(ax^2 + bx + c = 0\\) and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+3. **Legacy Systems**:  
+   - ASCII remains efficient for English-centric contexts (e.g., embedded systems), while UTF-8 dominates multilingual environments like the web.  
 
-How about a yummy crepe?
+### Key Differences Summarized  
+| Feature          | ASCII                  | UTF-8                          |  
+|------------------|------------------------|--------------------------------|  
+| **Digit Support** | Latin `0-9` only      | Global numerals                |  
+| **Byte Size**    | Fixed 1 byte per digit| 1 byte (Latin) or 2–4 bytes   |  
+| **Use Case**     | Legacy systems, English | Web, databases, multilingual apps |  
 
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg)
-
-It can also be centered!
-
-![Crepe](https://beautifuljekyll.com/assets/img/crepe.jpg){: .mx-auto.d-block :}
-
-Here's a code chunk:
-
-~~~
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-~~~
-
-And here is the same code with syntax highlighting:
-
-```javascript
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
+### Practical Tip: Converting Digits to Numbers  
+In programming, convert ASCII/UTF-8 digits to integers by subtracting `48` (ASCII `'0'`):  
+```python  
+# Python example  
+char = '9'  
+num = ord(char) - 48  # Result: 9  
 ```
 
-And here is the same code yet again but with line numbers:
+### Conclusion  
+While ASCII provides a compact encoding for Latin digits, UTF-8’s backward compatibility and global support make it the modern choice for numeric data. Understanding these nuances ensures robust handling of digits across systems—whether parsing a sensor’s ASCII output or displaying multilingual prices in an e-commerce app.  
 
-{% highlight javascript linenos %}
-var foo = function(x) {
-  return(x + 5);
-}
-foo(3)
-{% endhighlight %}
-
-## Boxes
-You can add notification, warning and error boxes like this:
-
-### Notification
-
-{: .box-note}
-**Note:** This is a notification box.
-
-### Warning
-
-{: .box-warning}
-**Warning:** This is a warning box.
-
-### Error
-
-{: .box-error}
-**Error:** This is an error box.
-
-## Local URLs in project sites {#local-urls}
-
-When hosting a *project site* on GitHub Pages (for example, `https://USERNAME.github.io/MyProject`), URLs that begin with `/` and refer to local files may not work correctly due to how the root URL (`/`) is interpreted by GitHub Pages. You can read more about it [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). To demonstrate the issue, the following local image will be broken **if your site is a project site:**
-
-![Crepe](/assets/img/crepe.jpg)
-
-If the above image is broken, then you'll need to follow the instructions [in the FAQ](https://beautifuljekyll.com/faq/#links-in-project-page). Here is proof that it can be fixed:
-
-![Crepe]({{ '/assets/img/crepe.jpg' | relative_url }})
-
-<details markdown="1">
-<summary>Click here!</summary>
-Here you can see an **expandable** section
-</details>
+*For deeper dives, explore tools like `hexdump` for byte-level inspection or libraries like Python’s `unicodedata` for numeral conversion.*
